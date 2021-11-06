@@ -6,7 +6,7 @@
     background-color: transparent;
 }
 .box {
-    width: clamp(240px, 50%, 640px);
+    width: clamp(240px, 95%, 640px);
     background-color: #fff;
     padding: 1.5rem 2rem;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.25);

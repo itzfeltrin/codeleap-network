@@ -1,6 +1,6 @@
 .container {
     margin: auto;
-    width: clamp(320px, 90%, 840px);
+    width: clamp(320px, 95%, 840px);
 }
 .header {
     background-color: #000;
