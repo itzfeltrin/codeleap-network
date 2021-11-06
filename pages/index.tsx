@@ -39,6 +39,7 @@ const Home: NextPage = () => {
                     </div>
                     <button
                         type="submit"
+                        aria-label="Enter Username"
                         disabled={username === ""}
                         className="primary"
                     >

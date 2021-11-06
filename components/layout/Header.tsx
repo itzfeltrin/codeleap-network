@@ -36,12 +36,14 @@ export const Header = ({
                     <div className={classes.actions}>
                         <button
                             onClick={() => onAction && onAction("delete")}
+                            aria-label="Delete Post"
                             className={classes.iconButton}
                         >
                             <DeleteIcon />
                         </button>
                         <button
                             onClick={() => onAction && onAction("edit")}
+                            aria-label="Edit Post"
                             className={classes.iconButton}
                         >
                             <EditIcon />
@@ -53,6 +55,7 @@ export const Header = ({
                         <span className={classes.username}>@{username}</span>
                         <button
                             onClick={signOut}
+                            aria-label="Sign Out"
                             className={classes.iconButton}
                         >
                             <LogoutIcon

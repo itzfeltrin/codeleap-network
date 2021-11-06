@@ -64,9 +64,10 @@ const Feed: NextPage = () => {
                         ))
                     )}
                     <button
-                        className="primary"
-                        disabled={!posts.hasNextPage}
                         onClick={() => posts.fetchNextPage()}
+                        aria-label="Load More Posts"
+                        disabled={!posts.hasNextPage}
+                        className="primary"
                     >
                         <span>Load More</span>
                     </button>

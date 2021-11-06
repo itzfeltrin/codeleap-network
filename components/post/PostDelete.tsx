@@ -14,6 +14,7 @@ export const PostDelete = ({ onCancel, onConfirm }: PostDeleteProps) => {
             <div className={classes.row}>
                 <button
                     type="button"
+                    aria-label="Cancel Deletion"
                     onClick={onCancel}
                     className={classes.button}
                 >
@@ -21,6 +22,7 @@ export const PostDelete = ({ onCancel, onConfirm }: PostDeleteProps) => {
                 </button>
                 <button
                     type="button"
+                    aria-label="Confirm Deletion"
                     onClick={onConfirm}
                     className={classes.button}
                 >

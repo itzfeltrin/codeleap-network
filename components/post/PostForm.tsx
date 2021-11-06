@@ -104,6 +104,7 @@ export const PostForm = ({
                 </div>
                 <button
                     type="submit"
+                    aria-label="Submit Post"
                     disabled={Object.keys(values)
                         .map((key) => values[key as keyof typeof values])
                         .some((value) => value === "")}
