@@ -6,3 +6,17 @@
     font-size: 1.33rem;
     color: #fff;
 }
+.row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.actions {
+    display: flex;
+    gap: 1rem;
+}
+.iconButton {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+}

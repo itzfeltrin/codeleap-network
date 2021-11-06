@@ -1,4 +1,5 @@
-import Image from "next/image";
+import { DeleteIcon } from "../icons/Delete";
+import { EditIcon } from "../icons/Edit";
 import classes from "./Header.module.css";
 
 type HeaderProps = {
@@ -12,25 +13,15 @@ export const Header = ({
 }: HeaderProps): JSX.Element => {
     return (
         <header className={classes.container}>
-            <div className="row">
+            <div className={classes.row}>
                 <h1 className={classes.title}>{title}</h1>
                 {showActions && (
-                    <div className="actions">
-                        <button className="unstyled">
-                            <Image
-                                src="/img/delete.svg"
-                                alt="Remove Post"
-                                width={24}
-                                height={24}
-                            />
+                    <div className={classes.actions}>
+                        <button className={classes.iconButton}>
+                            <DeleteIcon />
                         </button>
-                        <button className="unstyled">
-                            <Image
-                                src="/img/edit.svg"
-                                alt="Edit Post"
-                                width={24}
-                                height={24}
-                            />
+                        <button className={classes.iconButton}>
+                            <EditIcon />
                         </button>
                     </div>
                 )}
