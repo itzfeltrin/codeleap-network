@@ -7,9 +7,13 @@ import { useMemo } from "react";
 
 type PostItemProps = {
     post: PostData;
+    changeModalAction(action: string): void;
 };
 
-export const PostItem = ({ post }: PostItemProps): JSX.Element => {
+export const PostItem = ({
+    post,
+    changeModalAction,
+}: PostItemProps): JSX.Element => {
     const username = useSelector<{ username: string }>(
         (state) => state.username
     );
@@ -21,7 +25,11 @@ export const PostItem = ({ post }: PostItemProps): JSX.Element => {
 
     return (
         <div className={classes.container}>
-            <Header title={post.title} showActions={isAuthor} />
+            <Header
+                title={post.title}
+                showActions={isAuthor}
+                onAction={changeModalAction}
+            />
             <div className={classes.content}>
                 <div className={classes.row}>
                     <span className={classes.username}>@{post.username}</span>

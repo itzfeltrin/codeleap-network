@@ -1,6 +1,6 @@
 import axios from "axios";
 import { PaginatedResult } from "../types/common";
-import { PostData, PostFormData } from "../types/post";
+import { PostData, PostFormData, PostFormUpdateData } from "../types/post";
 
 const api = axios.create({ baseURL: "https://dev.codeleap.co.uk/careers" });
 
@@ -19,6 +19,22 @@ export const getAll = async (
 export const createOne = async (post: PostFormData) => {
     try {
         await api.post("/", post);
+    } catch (err) {
+        throw err;
+    }
+};
+
+export const updateOne = async ({ id, ...values }: PostFormUpdateData) => {
+    try {
+        await api.patch(`/${id}/`, values);
+    } catch (err) {
+        throw err;
+    }
+};
+
+export const deleteOne = async (id: number) => {
+    try {
+        await api.delete(`/${id}/`);
     } catch (err) {
         throw err;
     }

@@ -1,12 +1,21 @@
 import { NextPage } from "next";
-import { useInfiniteQuery } from "react-query";
+import { useState } from "react";
+import { useInfiniteQuery, useMutation } from "react-query";
 import { Header } from "../components/layout/Header";
 import { PostForm } from "../components/post/PostForm";
 import { PostItem } from "../components/post/PostItem";
 import classes from "../styles/Feed.module.css";
 import * as postActions from "../actions/post.actions";
+import { Modal } from "../components/layout/Modal";
+import { PostDelete } from "../components/post/PostDelete";
+import { PostData } from "../types/post";
 
 const Feed: NextPage = () => {
+    const [modalAction, setModalAction] = useState<{
+        action: "delete" | "edit";
+        post: PostData;
+    } | null>(null);
+
     const posts = useInfiniteQuery(
         "/posts",
         ({ pageParam = 0 }) => postActions.getAll(pageParam * 10),
@@ -24,25 +33,62 @@ const Feed: NextPage = () => {
         }
     );
 
+    const postDelete = useMutation(postActions.deleteOne, {
+        onSuccess: () => {
+            posts.refetch();
+
+            setModalAction(null);
+        },
+    });
+
+    const changeModalAction =
+        (post: PostData) => (action: "delete" | "edit") => {
+            setModalAction({ action, post });
+        };
+
     return (
-        <main className={classes.container}>
-            <Header />
-            <div className={classes.content}>
-                <PostForm />
-                {posts.data?.pages.map((page) =>
-                    page.results.map((post) => (
-                        <PostItem key={`post-${post.id}`} {...{ post }} />
-                    ))
+        <>
+            <main className={classes.container}>
+                <Header />
+                <div className={classes.content}>
+                    <PostForm />
+                    {posts.data?.pages.map((page) =>
+                        page.results.map((post) => (
+                            <PostItem
+                                key={`post-${post.id}`}
+                                {...{
+                                    post,
+                                    changeModalAction: changeModalAction(post),
+                                }}
+                            />
+                        ))
+                    )}
+                    <button
+                        className="primary"
+                        disabled={!posts.hasNextPage}
+                        onClick={() => posts.fetchNextPage()}
+                    >
+                        <span>Load More</span>
+                    </button>
+                </div>
+            </main>
+            <Modal
+                open={modalAction !== null}
+                onRequestClose={() => setModalAction(null)}
+            >
+                {modalAction?.action === "delete" ? (
+                    <PostDelete
+                        onCancel={() => setModalAction(null)}
+                        onConfirm={() => postDelete.mutate(modalAction.post.id)}
+                    />
+                ) : (
+                    <PostForm
+                        editing={modalAction?.post}
+                        afterSubmit={() => setModalAction(null)}
+                    />
                 )}
-                <button
-                    className="primary"
-                    disabled={!posts.hasNextPage}
-                    onClick={() => posts.fetchNextPage()}
-                >
-                    <span>Load More</span>
-                </button>
-            </div>
-        </main>
+            </Modal>
+        </>
     );
 };
 

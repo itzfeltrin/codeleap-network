@@ -2,20 +2,24 @@ import { useCallback, useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
 import classes from "./PostForm.module.css";
 import * as postActions from "../../actions/post.actions";
-import { PostFormData } from "../../types/post";
+import { PostData, PostFormData, PostFormUpdateData } from "../../types/post";
 import { useSelector } from "react-redux";
 
 type PostFormProps = {
-    editing?: boolean;
+    editing?: PostData | null;
+    afterSubmit?: () => void;
 };
 
-const initialValues = {
+const defaultValues = {
     title: "",
     content: "",
 };
 
-export const PostForm = ({ editing = false }: PostFormProps): JSX.Element => {
-    const [values, changeValues] = useState(initialValues);
+export const PostForm = ({
+    editing = null,
+    afterSubmit,
+}: PostFormProps): JSX.Element => {
+    const [values, changeValues] = useState(editing ? editing : defaultValues);
 
     const username = useSelector<{ username: string }>(
         (state) => state.username
@@ -25,9 +29,16 @@ export const PostForm = ({ editing = false }: PostFormProps): JSX.Element => {
 
     const postCreate = useMutation(postActions.createOne, {
         onSuccess: () => {
-            changeValues(initialValues);
+            changeValues(defaultValues);
 
             queryClient.invalidateQueries("/posts");
+        },
+    });
+    const postUpdate = useMutation(postActions.updateOne, {
+        onSuccess: () => {
+            queryClient.invalidateQueries("/posts");
+
+            afterSubmit && afterSubmit();
         },
     });
 
@@ -44,14 +55,18 @@ export const PostForm = ({ editing = false }: PostFormProps): JSX.Element => {
         (event) => {
             event.preventDefault();
 
-            const obj: PostFormData = {
-                username,
-                ...values,
-            };
+            if (editing) {
+                postUpdate.mutate(values as PostFormUpdateData);
+            } else {
+                const obj: PostFormData = {
+                    username,
+                    ...values,
+                };
 
-            postCreate.mutate(obj);
+                postCreate.mutate(obj);
+            }
         },
-        [postCreate, username, values]
+        [editing, postCreate, postUpdate, username, values]
     );
 
     return (
@@ -94,7 +109,7 @@ export const PostForm = ({ editing = false }: PostFormProps): JSX.Element => {
                         .some((value) => value === "")}
                     className="primary"
                 >
-                    <span>CREATE</span>
+                    <span>{editing ? "Save" : "Create"}</span>
                 </button>
             </form>
         </div>
