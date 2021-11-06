@@ -14,8 +14,6 @@ export const PostItem = ({ post }: PostItemProps): JSX.Element => {
         (state) => state.username
     );
 
-    console.log(username);
-
     const isAuthor = useMemo(
         () => post.username === username,
         [post.username, username]

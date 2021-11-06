@@ -1,14 +1,34 @@
 import { useCallback, useState } from "react";
+import { useMutation, useQueryClient } from "react-query";
 import classes from "./PostForm.module.css";
+import * as postActions from "../../actions/post.actions";
+import { PostFormData } from "../../types/post";
+import { useSelector } from "react-redux";
 
 type PostFormProps = {
     editing?: boolean;
 };
 
+const initialValues = {
+    title: "",
+    content: "",
+};
+
 export const PostForm = ({ editing = false }: PostFormProps): JSX.Element => {
-    const [values, changeValues] = useState({
-        title: "",
-        content: "",
+    const [values, changeValues] = useState(initialValues);
+
+    const username = useSelector<{ username: string }>(
+        (state) => state.username
+    ) as string;
+
+    const queryClient = useQueryClient();
+
+    const postCreate = useMutation(postActions.createOne, {
+        onSuccess: () => {
+            changeValues(initialValues);
+
+            queryClient.invalidateQueries("/posts");
+        },
     });
 
     const handleChangeValue =
@@ -20,9 +40,19 @@ export const PostForm = ({ editing = false }: PostFormProps): JSX.Element => {
             }));
         };
 
-    const handleSubmit = useCallback<React.FormEventHandler>((event) => {
-        event.preventDefault();
-    }, []);
+    const handleSubmit = useCallback<React.FormEventHandler>(
+        (event) => {
+            event.preventDefault();
+
+            const obj: PostFormData = {
+                username,
+                ...values,
+            };
+
+            postCreate.mutate(obj);
+        },
+        [postCreate, username, values]
+    );
 
     return (
         <div className={classes.container}>
