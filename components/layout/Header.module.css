@@ -13,10 +13,16 @@
 }
 .actions {
     display: flex;
+    align-items: center;
     gap: 1rem;
 }
 .iconButton {
     background: transparent;
     border: none;
     cursor: pointer;
+}
+.username {
+    color: #fff;
+    font-weight: 700;
+    font-size: 1rem;
 }

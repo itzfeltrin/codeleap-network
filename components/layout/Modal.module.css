@@ -9,6 +9,6 @@
     place-items: center;
 }
 .content {
-    width: clamp(320px, 95%, 840px);
+    width: clamp(320px, 95%, 720px);
     background-color: #fff;
 }

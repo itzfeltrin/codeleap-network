@@ -49,7 +49,7 @@ const Feed: NextPage = () => {
     return (
         <>
             <main className={classes.container}>
-                <Header />
+                <Header showActions="session" />
                 <div className={classes.content}>
                     <PostForm />
                     {posts.data?.pages.map((page) =>

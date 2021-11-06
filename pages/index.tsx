@@ -1,5 +1,4 @@
 import type { NextPage } from "next";
-import { useRouter } from "next/dist/client/router";
 import { useCallback, useState } from "react";
 import { useDispatch } from "react-redux";
 import { usernameSlice } from "../redux/usernameSlice";
@@ -10,17 +9,13 @@ const Home: NextPage = () => {
 
     const dispatch = useDispatch();
 
-    const router = useRouter();
-
     const handleSubmit = useCallback<React.FormEventHandler>(
         (event) => {
             event.preventDefault();
 
             dispatch(usernameSlice.actions.signIn(username));
-
-            router.push("/feed");
         },
-        [dispatch, router, username]
+        [dispatch, username]
     );
 
     return (

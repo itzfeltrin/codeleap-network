@@ -27,7 +27,7 @@ export const PostItem = ({
         <div className={classes.container}>
             <Header
                 title={post.title}
-                showActions={isAuthor}
+                showActions={isAuthor ? "post" : null}
                 onAction={changeModalAction}
             />
             <div className={classes.content}>
