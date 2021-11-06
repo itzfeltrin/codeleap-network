@@ -59,7 +59,9 @@ export const PostForm = ({ editing = false }: PostFormProps): JSX.Element => {
                 </div>
                 <button
                     type="submit"
-                    disabled={Object.keys(values).some((el) => el === "")}
+                    disabled={Object.keys(values)
+                        .map((key) => values[key as keyof typeof values])
+                        .some((value) => value === "")}
                     className="primary"
                 >
                     <span>CREATE</span>
