@@ -1,0 +1,27 @@
+.container {
+    border: 1px solid #999999;
+}
+.content {
+    background-color: #fff;
+    padding: 1.5rem 1.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.75rem;
+}
+.row {
+    display: flex;
+    justify-content: space-between;
+}
+.username {
+    color: #777777;
+    font-weight: 700;
+    font-size: 1rem;
+}
+.createdDatetime {
+    font-size: 1rem;
+    color: #777777;
+}
+.postContent {
+    font-size: 1rem;
+    line-height: 1.25rem;
+}

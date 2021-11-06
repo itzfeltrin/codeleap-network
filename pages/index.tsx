@@ -23,11 +23,11 @@ const Home: NextPage = () => {
         <main className={classes.container}>
             <div className={classes.box}>
                 <h3 className={classes.title}>Welcome to CodeLeap network!</h3>
-                <form onSubmit={handleSubmit} className={classes.form}>
-                    <label>
-                        <span className={classes.label}>
-                            Please enter your username
-                        </span>
+                <form onSubmit={handleSubmit}>
+                    <div className="input-group">
+                        <label htmlFor="username">
+                            <span>Please enter your username</span>
+                        </label>
                         <input
                             type="text"
                             id="username"
@@ -35,15 +35,15 @@ const Home: NextPage = () => {
                             placeholder="John Doe"
                             value={username}
                             onChange={(e) => changeUsername(e.target.value)}
-                            className={classes.field}
+                            className="field"
                         />
-                    </label>
+                    </div>
                     <button
                         type="submit"
                         disabled={username === ""}
-                        className={classes.button}
+                        className="primary"
                     >
-                        <span className={classes.buttonText}>ENTER</span>
+                        <span>ENTER</span>
                     </button>
                 </form>
             </div>

@@ -1,0 +1,8 @@
+.container {
+    padding: 1.25rem 1.5rem;
+    border: 1px solid #999999;
+}
+.title {
+    font-size: 1.33rem;
+    margin-bottom: 1.25rem;
+}
